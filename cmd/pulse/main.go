@@ -1,20 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"context"
 
-	"github.com/go-chi/chi/v5"
+	"github.com/RabotaemActivno/pulse/internal/app"
+	"github.com/RabotaemActivno/pulse/internal/config"
 )
 
 func main() {
-	r := chi.NewRouter()
-	r.Get("/health", handler)
-
-	http.ListenAndServe(":8080", r)
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintln(w, "OK")
+	cfg := config.MustLoad()
+	ctx := context.Background()
+	// TODO logger init
+	err := app.Run(ctx, cfg)
+	if err != nil {
+		panic("error to start App")
+	}
 }

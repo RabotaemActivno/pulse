@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: 'login'
+      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_DB: 'postgres'
+      ports: '5432:5432'
