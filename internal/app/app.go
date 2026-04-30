@@ -13,6 +13,7 @@ import (
 	"github.com/RabotaemActivno/pulse/pkg/httpserver"
 	postgresPool "github.com/RabotaemActivno/pulse/pkg/postgres"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/zerolog/log"
 )
 
@@ -25,6 +26,7 @@ func Run(ctx context.Context, cfg config.Config) error {
 	_ = postgres.New(pgPool)
 
 	r := chi.NewRouter()
+	r.Use(middleware.Recoverer)
 	http.PulseRouter(r)
 	httpServer := httpserver.New(r, cfg.HTTP)
 
