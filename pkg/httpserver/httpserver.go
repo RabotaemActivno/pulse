@@ -6,6 +6,8 @@ import (
 	"net"
 	"net/http"
 	"time"
+
+	"github.com/rs/zerolog/log"
 )
 
 type Server struct {
@@ -29,7 +31,7 @@ func New(handler http.Handler, c Config) *Server {
 
 	go s.start()
 
-	// TODO make log about server started
+	log.Info().Msg("http server started on port: " + c.Port)
 
 	return s
 }
@@ -37,18 +39,18 @@ func New(handler http.Handler, c Config) *Server {
 func (s *Server) start() {
 	err := s.server.ListenAndServe()
 	if err != nil && !errors.Is(err, http.ErrServerClosed) {
-
+		log.Error().Err(err).Msg("http server: ListenAndServe")
 	}
 }
 
-func (s *Server) close() {
+func (s *Server) Close() {
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
 
 	err := s.server.Shutdown(ctx)
 	if err != nil {
-		// TODO make logs
+		log.Error().Err(err).Msg("http server: s.server.Shutdown")
 	}
 
-	// TODO make logs
+	log.Info().Msg("http server: closed")
 }

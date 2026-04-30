@@ -2,12 +2,14 @@ package config
 
 import (
 	"github.com/RabotaemActivno/pulse/pkg/httpserver"
+	"github.com/RabotaemActivno/pulse/pkg/logger"
+	"github.com/RabotaemActivno/pulse/pkg/postgres"
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
 )
 
 type AppConfig struct {
-	Env string `envconfig:"ENV" defalult:"dev"`
+	Env string `envconfig:"ENV" default:"dev"`
 }
 
 //type HTTPConfig struct {
@@ -19,15 +21,15 @@ type AppConfig struct {
 //}
 
 type Config struct {
-	App  AppConfig
-	HTTP httpserver.Config
+	App      AppConfig
+	HTTP     httpserver.Config
+	Logger   logger.Config
+	Postgres postgres.Config
 }
 
 func MustLoad() Config {
 	var cfg Config
-	if err := godotenv.Load(".env"); err != nil {
-		panic("load config: " + err.Error())
-	}
+	_ = godotenv.Load(".env")
 	if err := envconfig.Process("", &cfg); err != nil {
 		panic("config: " + err.Error())
 	}
