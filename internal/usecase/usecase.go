@@ -2,12 +2,22 @@ package usecase
 
 import (
 	"context"
+	"time"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
+	"github.com/google/uuid"
 )
 
 type Postgres interface {
 	RegisterUser(ctx context.Context, user domain.User) error
+	LoginUser(ctx context.Context, email, password string) (uuid.UUID, error)
+	SaveRefreshToken(
+		ctx context.Context,
+		id uuid.UUID,
+		userID uuid.UUID,
+		tokenHash string,
+		expiresAt time.Time,
+	) error
 }
 
 type UseCase struct {

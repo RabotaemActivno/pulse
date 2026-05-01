@@ -3,5 +3,7 @@ package domain
 import "errors"
 
 var (
-	ErrorUserExists = errors.New("already exists")
+	ErrorTokenExists = errors.New("Token already exists")
+	ErrorUserExists  = errors.New("User already exists")
+	ErrorCredentials = errors.New("Invalid credentials")
 )

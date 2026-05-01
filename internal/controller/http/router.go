@@ -22,6 +22,7 @@ func PulseRouter(r *chi.Mux, uc *usecase.UseCase) {
 
 		r.Route("/v1", func(r chi.Router) {
 			r.Post("/register", v1.CreateUser)
+			r.Post("/login", v1.Login)
 		})
 	})
 }

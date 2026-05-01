@@ -48,3 +48,7 @@ func (u User) Validate() error {
 
 	return nil
 }
+
+func (u User) CheckPassword(pass string) error {
+	return bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(pass))
+}
