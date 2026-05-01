@@ -10,6 +10,7 @@ import (
 	"github.com/RabotaemActivno/pulse/internal/adapter/postgres"
 	"github.com/RabotaemActivno/pulse/internal/config"
 	"github.com/RabotaemActivno/pulse/internal/controller/http"
+	"github.com/RabotaemActivno/pulse/internal/usecase"
 	"github.com/RabotaemActivno/pulse/pkg/httpserver"
 	postgresPool "github.com/RabotaemActivno/pulse/pkg/postgres"
 	"github.com/go-chi/chi/v5"
@@ -23,11 +24,14 @@ func Run(ctx context.Context, cfg config.Config) error {
 	if err != nil {
 		return fmt.Errorf("postgres New: %w", err)
 	}
-	_ = postgres.New(pgPool)
+
+	p := postgres.New(pgPool)
+
+	uc := usecase.New(p)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
-	http.PulseRouter(r)
+	http.PulseRouter(r, uc)
 	httpServer := httpserver.New(r, cfg.HTTP)
 
 	log.Info().Msg("App started")

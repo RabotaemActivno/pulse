@@ -3,9 +3,9 @@ package postgres
 import "github.com/RabotaemActivno/pulse/pkg/postgres"
 
 type Postgres struct {
-	pgPool *postgres.Pool
+	PgPool *postgres.Pool
 }
 
 func New(pool *postgres.Pool) *Postgres {
-	return &Postgres{pgPool: pool}
+	return &Postgres{PgPool: pool}
 }
