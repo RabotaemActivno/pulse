@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	ver1 "github.com/RabotaemActivno/pulse/internal/controller/http/v1"
+	"github.com/RabotaemActivno/pulse/internal/middleware"
 	"github.com/RabotaemActivno/pulse/internal/usecase"
 	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog/log"
@@ -23,6 +24,12 @@ func PulseRouter(r *chi.Mux, uc *usecase.UseCase) {
 		r.Route("/v1", func(r chi.Router) {
 			r.Post("/register", v1.CreateUser)
 			r.Post("/login", v1.Login)
+
+			r.Route("/private", func(r chi.Router) {
+				r.Use(middleware.AuthMiddleware)
+
+				r.Get("/pook", v1.Private)
+			})
 		})
 	})
 }
