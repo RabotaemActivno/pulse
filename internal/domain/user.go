@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
-	password "github.com/vzglad-smerti/password_hash"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -20,7 +20,9 @@ var validate = validator.New(validator.WithRequiredStructEnabled())
 
 func NewUser(email, pass string) (User, error) {
 
-	passwordHash, err := password.Hash(pass)
+	bytesPass := []byte(pass)
+	passwordHashBytes, err := bcrypt.GenerateFromPassword(bytesPass, bcrypt.DefaultCost)
+
 	if err != nil {
 		return User{}, fmt.Errorf("password.Hash: %w", err)
 	}
@@ -28,7 +30,7 @@ func NewUser(email, pass string) (User, error) {
 	user := User{
 		ID:           uuid.New(),
 		Email:        email,
-		PasswordHash: passwordHash,
+		PasswordHash: string(passwordHashBytes),
 	}
 
 	if err := user.Validate(); err != nil {
