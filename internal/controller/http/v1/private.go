@@ -7,7 +7,6 @@ import (
 )
 
 func (h *Handlers) Private(w http.ResponseWriter, r *http.Request) {
-	//ctx := r.Context()
 
-	render.JSON(w, "", http.StatusOK)
+	render.JSON(w, "private output", http.StatusOK)
 }

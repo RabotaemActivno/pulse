@@ -19,7 +19,7 @@ func (uc *UseCase) LoginUser(ctx context.Context, input dto.LoginUserInput) (dto
 
 	log.Info().Msg("User logged successful")
 
-	accessToken, err := auth.GenerateAccessToken(userID, input.Email)
+	accessToken, err := auth.GenerateAccessToken(userID)
 	if err != nil {
 		return dto.LoginUserOutput{}, fmt.Errorf("GenerateAccessToken: %w", err)
 	}
