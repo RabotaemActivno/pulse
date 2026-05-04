@@ -51,8 +51,7 @@ func (t *Token) CompareTokens(tkn string) bool {
 }
 
 func (t *Token) HasExpired() bool {
-	thirtyDays := 30 * 24 * time.Hour
-	return time.Since(t.ExpiresAt) > thirtyDays
+	return time.Now().After(t.ExpiresAt)
 }
 
 func tokenToHash(tkn string) string {

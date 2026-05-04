@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
 	"github.com/RabotaemActivno/pulse/internal/dto"
@@ -18,8 +17,8 @@ func (uc *UseCase) RefreshToken(ctx context.Context, input dto.RefreshTokenInput
 		return dto.RefreshTokenOutput{}, fmt.Errorf("db.FindToken: %w", err)
 	}
 
-	if tkn.RevokedAt != nil && !tkn.RevokedAt.Before(time.Now()) && tkn.HasExpired() {
-		return dto.RefreshTokenOutput{}, fmt.Errorf("Invalid token")
+	if tkn.RevokedAt != nil || tkn.HasExpired() {
+		return dto.RefreshTokenOutput{}, fmt.Errorf("invalid token")
 	}
 
 	newTknStr, err := domain.GenerateRefreshToken()
