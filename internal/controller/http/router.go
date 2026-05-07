@@ -25,6 +25,7 @@ func PulseRouter(r *chi.Mux, uc *usecase.UseCase) {
 			r.Post("/register", v1.CreateUser)
 			r.Post("/login", v1.Login)
 			r.Post("/refresh", v1.Refresh)
+			r.Post("/logout", v1.LogoutUser)
 
 			r.Route("/user", func(r chi.Router) {
 				r.Use(middleware.AuthMiddleware)

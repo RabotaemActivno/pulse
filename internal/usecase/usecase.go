@@ -19,6 +19,7 @@ type Postgres interface {
 		expiresAt time.Time,
 	) error
 	FindToken(ctx context.Context, tokenHash string) (domain.Token, error)
+	LogoutUser(ctx context.Context, tokenHash string) error
 }
 
 type UseCase struct {
