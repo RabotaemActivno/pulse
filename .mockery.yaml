@@ -1,0 +1,9 @@
+dir: "{{.InterfaceDir}}/mocks"
+pkgname: "mocks"
+filename: mocks.go
+packages:
+  github.com/RabotaemActivno/pulse/internal/usecase:
+    config:
+      all: true
+    interfaces:
+      Postgres:
