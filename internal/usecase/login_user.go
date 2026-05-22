@@ -12,9 +12,13 @@ import (
 
 func (uc *UseCase) LoginUser(ctx context.Context, input dto.LoginUserInput) (dto.LoginUserOutput, error) {
 
+	if input.Email == "" || input.Password == "" {
+		return dto.LoginUserOutput{}, fmt.Errorf("email and password must not be empty")
+	}
+
 	userID, err := uc.postgres.LoginUser(ctx, input.Email, input.Password)
 	if err != nil {
-		return dto.LoginUserOutput{}, fmt.Errorf("LoginUser: %w", err)
+		return dto.LoginUserOutput{}, fmt.Errorf("login user failed")
 	}
 
 	log.Info().Msg("User logged successful")

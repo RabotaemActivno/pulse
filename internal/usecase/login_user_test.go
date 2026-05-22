@@ -31,3 +31,16 @@ func Test_Login_Success(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, output)
 }
+
+func Test_Login_EmptyEmail(t *testing.T) {
+	postgres := mocks.NewMockPostgres(t)
+
+	uc := usecase.New(postgres)
+
+	input := dto.LoginUserInput{Email: "", Password: "123"}
+
+	output, err := uc.LoginUser(context.Background(), input)
+
+	require.Error(t, err)
+	require.Empty(t, output)
+}
