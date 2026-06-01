@@ -4,22 +4,22 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/RabotaemActivno/pulse/internal/domain"
+	"github.com/RabotaemActivno/pulse/internal/dto"
 	"github.com/jackc/pgx/v5"
 )
 
-func (p *Postgres) GetMonitors(ctx context.Context) ([]domain.Monitor, error) {
+func (p *Postgres) GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error) {
 	sql := `SELECT * FROM monitors`
 
 	rows, err := p.PgPool.Query(ctx, sql)
 	if err != nil {
-		return nil, fmt.Errorf("GetMonitors: %w", err)
+		return dto.GetMonitorsOutput{}, fmt.Errorf("GetMonitors: %w", err)
 	}
 
-	monitors, err := pgx.CollectRows(rows, pgx.RowToStructByName[domain.Monitor])
+	monitors, err := pgx.CollectRows(rows, pgx.RowToStructByName[dto.GetMonitorOutput])
 	if err != nil {
-		return nil, fmt.Errorf("GetMonitors: %w", err)
+		return dto.GetMonitorsOutput{}, fmt.Errorf("GetMonitors: %w", err)
 	}
 
-	return monitors, nil
+	return dto.GetMonitorsOutput{Monitors: monitors}, nil
 }

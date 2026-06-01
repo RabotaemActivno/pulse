@@ -1,7 +1,17 @@
 package dto
 
-import "github.com/RabotaemActivno/pulse/internal/domain"
+import (
+	"github.com/google/uuid"
+)
 
 type GetMonitorsOutput struct {
-	Monitors []domain.Monitor `json:"monitors"` 
+	Monitors []GetMonitorOutput `json:"monitors"`
+}
+
+type GetMonitorOutput struct {
+	UserID          uuid.UUID `json:"user_id"`
+	Name            string    `json:"name"`
+	URL             string    `json:"url"`
+	Method          string    `json:"method"`
+	IntervalSeconds int       `json:"interval_seconds"`
 }

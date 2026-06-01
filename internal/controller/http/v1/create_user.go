@@ -9,8 +9,6 @@ import (
 )
 
 func (h *Handlers) CreateUser(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
 	input := dto.RegisterUserInput{}
 
 	err := json.NewDecoder(r.Body).Decode(&input)
@@ -19,7 +17,7 @@ func (h *Handlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	output, err := h.usecase.RegisterUser(ctx, input)
+	output, err := h.usecase.RegisterUser(r.Context(), input)
 	if err != nil {
 		render.Error(w, err, http.StatusBadRequest, "request failed")
 		return

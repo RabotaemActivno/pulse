@@ -14,5 +14,5 @@ func (uc *UseCase) GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, erro
 		return dto.GetMonitorsOutput{}, fmt.Errorf("failed to load monitors")
 	}
 
-	return dto.GetMonitorsOutput{Monitors: ms}, nil
+	return ms, nil
 }

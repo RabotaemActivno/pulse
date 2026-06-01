@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
+	"github.com/RabotaemActivno/pulse/internal/dto"
 	"github.com/google/uuid"
 )
 
@@ -20,7 +21,7 @@ type Postgres interface {
 	) error
 	FindToken(ctx context.Context, tokenHash string) (domain.Token, error)
 	LogoutUser(ctx context.Context, tokenHash string) error
-	GetMonitors(ctx context.Context) ([]domain.Monitor, error)
+	GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error)
 }
 
 type UseCase struct {
