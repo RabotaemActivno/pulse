@@ -8,6 +8,8 @@ type CreateMonitorInput struct {
 	URL             string    `json:"url"`
 	Method          string    `json:"method"`
 	IntervalSeconds int       `json:"interval_seconds"`
+	TimeoutSeconds  int       `json:"timeout_seconds"`
+	ExpectedStatus  int       `json:"expected_status"`
 }
 
 type CreateMonitorOutput struct {
