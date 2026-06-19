@@ -2,13 +2,16 @@ package usecase
 
 import (
 	"context"
-	"net/url"
+	"errors"
+	"fmt"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
 	"github.com/RabotaemActivno/pulse/internal/dto"
 )
 
 func (uc *UseCase) CreateMonitor(ctx context.Context, input dto.CreateMonitorInput) (dto.CreateMonitorOutput, error) {
+
+	var output dto.CreateMonitorOutput
 
 	mtr, err := domain.NewMonitor(
 		input.UserID,
@@ -20,7 +23,18 @@ func (uc *UseCase) CreateMonitor(ctx context.Context, input dto.CreateMonitorInp
 		input.ExpectedStatus,
 	)
 	if err != nil {
-		
+		return output, fmt.Errorf("domain.CreateMonitor: %w", err)
 	}
 
+	err = uc.postgres.CreateMonitor(ctx, mtr)
+	if err != nil {
+		if errors.Is(err, domain.ErrorMonitorExists) {
+			return output, fmt.Errorf("Monitor alredy exists: %w", err)
+		}
+		return output, fmt.Errorf("db.CreateMonitor: %w", err)
+	}
+
+	output.ID = mtr.ID
+
+	return output, nil
 }
