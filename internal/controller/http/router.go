@@ -27,17 +27,14 @@ func PulseRouter(r *chi.Mux, uc *usecase.UseCase) {
 				r.Post("/login", v1.Login)
 				r.Post("/refresh", v1.Refresh)
 				r.Post("/logout", v1.LogoutUser)
-
-				//r.Route("/user", func(r chi.Router) {
-				//	r.Use(middleware.AuthMiddleware)
-				//	r.Get("/private", v1.Private)
-				//})
 			})
 
 			r.Route("/monitors", func(r chi.Router) {
 				r.Use(middleware.AuthMiddleware)
 
 				r.Get("/", v1.GetMonitors)
+				r.Post("/create", v1.CreateMonitor)
+				r.Delete("/{id}", v1.DeleteMonitor)
 			})
 		})
 	})

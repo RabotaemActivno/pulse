@@ -26,8 +26,34 @@ func (p *Postgres) CreateMonitor(ctx context.Context, mtr domain.Monitor) error 
 	}
 
 	queryCreateMonitor := `
-		INSERT INTO monitors (id)
-	`
+		INSERT INTO monitors (
+			id, 
+			user_id, 
+			name, 
+			url, 
+			method, 
+			interval_seconds, 
+			timeout_seconds,
+			expected_status,
+		  	consecutive_failures
+		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+
+	args := []any{
+		mtr.ID,
+		mtr.UserID,
+		mtr.Name,
+		mtr.URL,
+		mtr.Method,
+		mtr.IntervalSeconds,
+		mtr.TimeoutSeconds,
+		mtr.ExpectedStatus,
+		mtr.ConsecutiveFailures,
+	}
+
+	_, err = p.PgPool.Exec(ctx, queryCreateMonitor, args...)
+	if err != nil {
+		return fmt.Errorf("PgPool.Exec: %w", err)
+	}
 
 	return nil
 }

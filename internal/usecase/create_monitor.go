@@ -26,6 +26,11 @@ func (uc *UseCase) CreateMonitor(ctx context.Context, input dto.CreateMonitorInp
 		return output, fmt.Errorf("domain.CreateMonitor: %w", err)
 	}
 
+	err = mtr.Validate()
+	if err != nil {
+		return output, fmt.Errorf("domain.Validate: %w", err)
+	}
+
 	err = uc.postgres.CreateMonitor(ctx, mtr)
 	if err != nil {
 		if errors.Is(err, domain.ErrorMonitorExists) {

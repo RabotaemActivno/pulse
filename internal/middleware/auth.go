@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/RabotaemActivno/pulse/pkg/auth"
+	"github.com/RabotaemActivno/pulse/pkg/render"
 )
 
 func AuthMiddleware(next http.Handler) http.Handler {
@@ -14,13 +15,13 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		accessToken := getAccessTokenFromHeader(r)
 
 		if accessToken == "" {
-			http.Error(w, "missing access token", http.StatusUnauthorized)
+			render.Error(w, nil, http.StatusUnauthorized, "missing access token")
 			return
 		}
 
 		claims, err := auth.ParseAccessToken(accessToken)
 		if err != nil {
-			http.Error(w, "invalid or expired access token", http.StatusUnauthorized)
+			render.Error(w, err, http.StatusUnauthorized, "invalid or expired access token")
 			return
 		}
 

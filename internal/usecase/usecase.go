@@ -23,6 +23,7 @@ type Postgres interface {
 	LogoutUser(ctx context.Context, tokenHash string) error
 	GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error)
 	CreateMonitor(ctx context.Context, monitor domain.Monitor) error
+	DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error
 }
 
 type UseCase struct {

@@ -7,4 +7,5 @@ var (
 	ErrorUserExists    = errors.New("User already exists")
 	ErrorCredentials   = errors.New("Invalid credentials")
 	ErrorMonitorExists = errors.New("Monitor already exists")
+	ErrorNotFound      = errors.New("Not found")
 )

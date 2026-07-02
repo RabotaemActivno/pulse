@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 )
 
@@ -14,8 +13,8 @@ type Monitor struct {
 	Name                string    `json:"name" validate:"required,min=3,max=64"`
 	URL                 string    `json:"URL" validate:"required,url,min=3,max=64"`
 	Method              string    `json:"method"`
-	IntervalSeconds     int       `json:"interval_seconds"`
-	TimeoutSeconds      int       `json:"timeout_seconds"`
+	IntervalSeconds     int       `json:"interval_seconds" validate:"required,min=1"`
+	TimeoutSeconds      int       `json:"timeout_seconds" validate:"required,min=1"`
 	ExpectedStatus      int       `json:"expected_status"`
 	IsActive            bool      `json:"is_active"`
 	NextCheckAt         time.Time `json:"next_check_at"`
@@ -23,8 +22,6 @@ type Monitor struct {
 	CreatedAt           time.Time `json:"created_at"`
 	UpdatedAt           time.Time `json:"updated_at"`
 }
-
-var validate = validator.New(validator.WithRequiredStructEnabled())
 
 func NewMonitor(
 	UserID uuid.UUID,
