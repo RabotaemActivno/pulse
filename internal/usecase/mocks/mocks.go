@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
+	"github.com/RabotaemActivno/pulse/internal/dto"
 	"github.com/google/uuid"
 	mock "github.com/stretchr/testify/mock"
 )
@@ -38,6 +39,120 @@ type MockPostgres_Expecter struct {
 
 func (_m *MockPostgres) EXPECT() *MockPostgres_Expecter {
 	return &MockPostgres_Expecter{mock: &_m.Mock}
+}
+
+// CreateMonitor provides a mock function for the type MockPostgres
+func (_mock *MockPostgres) CreateMonitor(ctx context.Context, monitor domain.Monitor) error {
+	ret := _mock.Called(ctx, monitor)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CreateMonitor")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, domain.Monitor) error); ok {
+		r0 = returnFunc(ctx, monitor)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockPostgres_CreateMonitor_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'CreateMonitor'
+type MockPostgres_CreateMonitor_Call struct {
+	*mock.Call
+}
+
+// CreateMonitor is a helper method to define mock.On call
+//   - ctx context.Context
+//   - monitor domain.Monitor
+func (_e *MockPostgres_Expecter) CreateMonitor(ctx interface{}, monitor interface{}) *MockPostgres_CreateMonitor_Call {
+	return &MockPostgres_CreateMonitor_Call{Call: _e.mock.On("CreateMonitor", ctx, monitor)}
+}
+
+func (_c *MockPostgres_CreateMonitor_Call) Run(run func(ctx context.Context, monitor domain.Monitor)) *MockPostgres_CreateMonitor_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 domain.Monitor
+		if args[1] != nil {
+			arg1 = args[1].(domain.Monitor)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockPostgres_CreateMonitor_Call) Return(err error) *MockPostgres_CreateMonitor_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockPostgres_CreateMonitor_Call) RunAndReturn(run func(ctx context.Context, monitor domain.Monitor) error) *MockPostgres_CreateMonitor_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// DeleteMonitor provides a mock function for the type MockPostgres
+func (_mock *MockPostgres) DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error {
+	ret := _mock.Called(ctx, monitorID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteMonitor")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, uuid.UUID) error); ok {
+		r0 = returnFunc(ctx, monitorID)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockPostgres_DeleteMonitor_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeleteMonitor'
+type MockPostgres_DeleteMonitor_Call struct {
+	*mock.Call
+}
+
+// DeleteMonitor is a helper method to define mock.On call
+//   - ctx context.Context
+//   - monitorID uuid.UUID
+func (_e *MockPostgres_Expecter) DeleteMonitor(ctx interface{}, monitorID interface{}) *MockPostgres_DeleteMonitor_Call {
+	return &MockPostgres_DeleteMonitor_Call{Call: _e.mock.On("DeleteMonitor", ctx, monitorID)}
+}
+
+func (_c *MockPostgres_DeleteMonitor_Call) Run(run func(ctx context.Context, monitorID uuid.UUID)) *MockPostgres_DeleteMonitor_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 uuid.UUID
+		if args[1] != nil {
+			arg1 = args[1].(uuid.UUID)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockPostgres_DeleteMonitor_Call) Return(err error) *MockPostgres_DeleteMonitor_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockPostgres_DeleteMonitor_Call) RunAndReturn(run func(ctx context.Context, monitorID uuid.UUID) error) *MockPostgres_DeleteMonitor_Call {
+	_c.Call.Return(run)
+	return _c
 }
 
 // FindToken provides a mock function for the type MockPostgres
@@ -102,6 +217,132 @@ func (_c *MockPostgres_FindToken_Call) Return(token domain.Token, err error) *Mo
 }
 
 func (_c *MockPostgres_FindToken_Call) RunAndReturn(run func(ctx context.Context, tokenHash string) (domain.Token, error)) *MockPostgres_FindToken_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetMonitor provides a mock function for the type MockPostgres
+func (_mock *MockPostgres) GetMonitor(ctx context.Context, monitorID uuid.UUID) (domain.Monitor, error) {
+	ret := _mock.Called(ctx, monitorID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetMonitor")
+	}
+
+	var r0 domain.Monitor
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, uuid.UUID) (domain.Monitor, error)); ok {
+		return returnFunc(ctx, monitorID)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context, uuid.UUID) domain.Monitor); ok {
+		r0 = returnFunc(ctx, monitorID)
+	} else {
+		r0 = ret.Get(0).(domain.Monitor)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, uuid.UUID) error); ok {
+		r1 = returnFunc(ctx, monitorID)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockPostgres_GetMonitor_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetMonitor'
+type MockPostgres_GetMonitor_Call struct {
+	*mock.Call
+}
+
+// GetMonitor is a helper method to define mock.On call
+//   - ctx context.Context
+//   - monitorID uuid.UUID
+func (_e *MockPostgres_Expecter) GetMonitor(ctx interface{}, monitorID interface{}) *MockPostgres_GetMonitor_Call {
+	return &MockPostgres_GetMonitor_Call{Call: _e.mock.On("GetMonitor", ctx, monitorID)}
+}
+
+func (_c *MockPostgres_GetMonitor_Call) Run(run func(ctx context.Context, monitorID uuid.UUID)) *MockPostgres_GetMonitor_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 uuid.UUID
+		if args[1] != nil {
+			arg1 = args[1].(uuid.UUID)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockPostgres_GetMonitor_Call) Return(monitor domain.Monitor, err error) *MockPostgres_GetMonitor_Call {
+	_c.Call.Return(monitor, err)
+	return _c
+}
+
+func (_c *MockPostgres_GetMonitor_Call) RunAndReturn(run func(ctx context.Context, monitorID uuid.UUID) (domain.Monitor, error)) *MockPostgres_GetMonitor_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// GetMonitors provides a mock function for the type MockPostgres
+func (_mock *MockPostgres) GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error) {
+	ret := _mock.Called(ctx)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetMonitors")
+	}
+
+	var r0 dto.GetMonitorsOutput
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context) (dto.GetMonitorsOutput, error)); ok {
+		return returnFunc(ctx)
+	}
+	if returnFunc, ok := ret.Get(0).(func(context.Context) dto.GetMonitorsOutput); ok {
+		r0 = returnFunc(ctx)
+	} else {
+		r0 = ret.Get(0).(dto.GetMonitorsOutput)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context) error); ok {
+		r1 = returnFunc(ctx)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
+}
+
+// MockPostgres_GetMonitors_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetMonitors'
+type MockPostgres_GetMonitors_Call struct {
+	*mock.Call
+}
+
+// GetMonitors is a helper method to define mock.On call
+//   - ctx context.Context
+func (_e *MockPostgres_Expecter) GetMonitors(ctx interface{}) *MockPostgres_GetMonitors_Call {
+	return &MockPostgres_GetMonitors_Call{Call: _e.mock.On("GetMonitors", ctx)}
+}
+
+func (_c *MockPostgres_GetMonitors_Call) Run(run func(ctx context.Context)) *MockPostgres_GetMonitors_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
+	})
+	return _c
+}
+
+func (_c *MockPostgres_GetMonitors_Call) Return(getMonitorsOutput dto.GetMonitorsOutput, err error) *MockPostgres_GetMonitors_Call {
+	_c.Call.Return(getMonitorsOutput, err)
+	return _c
+}
+
+func (_c *MockPostgres_GetMonitors_Call) RunAndReturn(run func(ctx context.Context) (dto.GetMonitorsOutput, error)) *MockPostgres_GetMonitors_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -365,6 +606,63 @@ func (_c *MockPostgres_SaveRefreshToken_Call) Return(err error) *MockPostgres_Sa
 }
 
 func (_c *MockPostgres_SaveRefreshToken_Call) RunAndReturn(run func(ctx context.Context, id uuid.UUID, userID uuid.UUID, tokenHash string, expiresAt time.Time) error) *MockPostgres_SaveRefreshToken_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// UpdateMonitor provides a mock function for the type MockPostgres
+func (_mock *MockPostgres) UpdateMonitor(ctx context.Context, mtr domain.Monitor) error {
+	ret := _mock.Called(ctx, mtr)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UpdateMonitor")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, domain.Monitor) error); ok {
+		r0 = returnFunc(ctx, mtr)
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockPostgres_UpdateMonitor_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'UpdateMonitor'
+type MockPostgres_UpdateMonitor_Call struct {
+	*mock.Call
+}
+
+// UpdateMonitor is a helper method to define mock.On call
+//   - ctx context.Context
+//   - mtr domain.Monitor
+func (_e *MockPostgres_Expecter) UpdateMonitor(ctx interface{}, mtr interface{}) *MockPostgres_UpdateMonitor_Call {
+	return &MockPostgres_UpdateMonitor_Call{Call: _e.mock.On("UpdateMonitor", ctx, mtr)}
+}
+
+func (_c *MockPostgres_UpdateMonitor_Call) Run(run func(ctx context.Context, mtr domain.Monitor)) *MockPostgres_UpdateMonitor_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 domain.Monitor
+		if args[1] != nil {
+			arg1 = args[1].(domain.Monitor)
+		}
+		run(
+			arg0,
+			arg1,
+		)
+	})
+	return _c
+}
+
+func (_c *MockPostgres_UpdateMonitor_Call) Return(err error) *MockPostgres_UpdateMonitor_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockPostgres_UpdateMonitor_Call) RunAndReturn(run func(ctx context.Context, mtr domain.Monitor) error) *MockPostgres_UpdateMonitor_Call {
 	_c.Call.Return(run)
 	return _c
 }

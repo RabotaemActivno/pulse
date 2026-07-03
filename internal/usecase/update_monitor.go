@@ -53,4 +53,5 @@ func update(mtr domain.Monitor, input dto.UpdateMonitorInput) domain.Monitor {
 	if input.ExpectedStatus != nil {
 		mtr.ExpectedStatus = *input.ExpectedStatus
 	}
+	return mtr
 }
