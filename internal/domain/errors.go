@@ -3,9 +3,10 @@ package domain
 import "errors"
 
 var (
-	ErrorTokenExists   = errors.New("Token already exists")
-	ErrorUserExists    = errors.New("User already exists")
-	ErrorCredentials   = errors.New("Invalid credentials")
-	ErrorMonitorExists = errors.New("Monitor already exists")
-	ErrorNotFound      = errors.New("Not found")
+	ErrorTokenExists             = errors.New("Token already exists")
+	ErrorUserExists              = errors.New("User already exists")
+	ErrorCredentials             = errors.New("Invalid credentials")
+	ErrorMonitorExists           = errors.New("Monitor already exists")
+	ErrorNotFound                = errors.New("Not found")
+	ErrorAllFieldsForUpdateEmpty = errors.New("All fields for update empty")
 )

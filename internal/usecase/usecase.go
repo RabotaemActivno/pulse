@@ -24,6 +24,8 @@ type Postgres interface {
 	GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error)
 	CreateMonitor(ctx context.Context, monitor domain.Monitor) error
 	DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error
+	UpdateMonitor(ctx context.Context, mtr domain.Monitor) error
+	GetMonitor(ctx context.Context, monitorID uuid.UUID) (domain.Monitor, error)
 }
 
 type UseCase struct {
