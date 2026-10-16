@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"log/slog"
 	"time"
 
 	"github.com/RabotaemActivno/pulse/internal/domain"
@@ -26,14 +27,17 @@ type Postgres interface {
 	DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error
 	UpdateMonitor(ctx context.Context, mtr domain.Monitor) error
 	GetMonitor(ctx context.Context, monitorID uuid.UUID) (domain.Monitor, error)
+	CreateCheck(ctx context.Context, check domain.Check) error
 }
 
 type UseCase struct {
+	logger   *slog.Logger
 	postgres Postgres
 }
 
-func New(postgres Postgres) *UseCase {
+func New(postgres Postgres, logger *slog.Logger) *UseCase {
 	return &UseCase{
 		postgres: postgres,
+		logger:   logger,
 	}
 }

@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
@@ -15,7 +16,11 @@ import (
 	postgresPool "github.com/RabotaemActivno/pulse/pkg/postgres"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/rs/zerolog/log"
+)
+
+const (
+	EnvProd = "prod"
+	EnvDev  = "dev"
 )
 
 func Run(ctx context.Context, cfg config.Config) error {
@@ -24,6 +29,8 @@ func Run(ctx context.Context, cfg config.Config) error {
 	if err != nil {
 		return fmt.Errorf("postgres New: %w", err)
 	}
+
+	log := setupLogger(cfg.Logger)
 
 	p := postgres.New(pgPool)
 
@@ -34,16 +41,33 @@ func Run(ctx context.Context, cfg config.Config) error {
 	http.PulseRouter(r, uc)
 	httpServer := httpserver.New(r, cfg.HTTP)
 
-	log.Info().Msg("App started")
 	sig := make(chan os.Signal, 1)
+
+	log.Info("App started")
 
 	signal.Notify(sig, syscall.SIGTERM, syscall.SIGINT)
 
 	<-sig
-	log.Info().Msg("App got signal to stop")
 
 	httpServer.Close()
 
-	log.Info().Msg("App stopped")
+	log.Info("App stopped")
+
 	return nil
+}
+
+func setupLogger(env string) *slog.Logger {
+	var log *slog.Logger
+
+	switch env {
+	case EnvProd:
+		log = slog.New(
+			slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelError}),
+		)
+	case EnvDev:
+		log = slog.New(
+			slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}),
+		)
+	}
+	return log
 }
