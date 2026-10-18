@@ -1,6 +1,7 @@
 package http
 
 import (
+	"log/slog"
 	"net/http"
 
 	ver1 "github.com/RabotaemActivno/pulse/internal/controller/http/v1"
@@ -10,9 +11,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func PulseRouter(r *chi.Mux, uc *usecase.UseCase) {
+func PulseRouter(r *chi.Mux, uc *usecase.UseCase, logger *slog.Logger) {
 
-	v1 := ver1.New(uc)
+	v1 := ver1.New(uc, logger)
 
 	r.Get("/health", func(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusOK)

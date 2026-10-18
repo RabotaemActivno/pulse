@@ -60,7 +60,7 @@ func NewMonitor(
 func (m Monitor) Validate() error {
 	err := validate.Struct(m)
 	if err != nil {
-		return fmt.Errorf("validate structL %w", err)
+		return fmt.Errorf("validate struct %w", err)
 	}
 
 	return nil

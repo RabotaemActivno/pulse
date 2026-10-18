@@ -2,20 +2,18 @@ package usecase
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
-	"github.com/RabotaemActivno/pulse/internal/domain"
 	"github.com/google/uuid"
 )
 
-func (uc *UseCase) DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error {
-	err := uc.postgres.DeleteMonitor(ctx, monitorID)
+func (uc *UseCase) DeleteMonitor(ctx context.Context, monitorID uuid.UUID, userID uuid.UUID) error {
+	const op = "usecase.DeleteMonitor"
+	log := uc.logger.With("op", op)
+	err := uc.postgres.DeleteMonitor(ctx, monitorID, userID)
 	if err != nil {
-		if errors.Is(err, domain.ErrorNotFound) {
-			return fmt.Errorf("uc.DeleteMonitor: %w", err)
-		}
-		return fmt.Errorf("uc.DeleteMonitor")
+		return fmt.Errorf("%v: %w", op, err)
 	}
+	log.Info("monitor was deleted")
 	return nil
 }

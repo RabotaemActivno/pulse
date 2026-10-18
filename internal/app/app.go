@@ -34,11 +34,11 @@ func Run(ctx context.Context, cfg config.Config) error {
 
 	p := postgres.New(pgPool)
 
-	uc := usecase.New(p)
+	uc := usecase.New(p, log)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
-	http.PulseRouter(r, uc)
+	http.PulseRouter(r, uc, log)
 	httpServer := httpserver.New(r, cfg.HTTP)
 
 	sig := make(chan os.Signal, 1)

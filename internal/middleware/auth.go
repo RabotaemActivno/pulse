@@ -7,7 +7,12 @@ import (
 
 	"github.com/RabotaemActivno/pulse/pkg/auth"
 	"github.com/RabotaemActivno/pulse/pkg/render"
+	"github.com/google/uuid"
 )
+
+type ctxKey struct{}
+
+var userIDKey ctxKey
 
 func AuthMiddleware(next http.Handler) http.Handler {
 
@@ -25,7 +30,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "user_id", claims.UserID)
+		ctx := context.WithValue(r.Context(), userIDKey, claims.UserID)
 
 		next.ServeHTTP(w, r.WithContext(ctx))
 	}
@@ -47,4 +52,9 @@ func getAccessTokenFromHeader(r *http.Request) string {
 	}
 
 	return parts[1]
+}
+
+func UserIDFromContext(ctx context.Context) (uuid.UUID, bool) {
+	id, ok := ctx.Value(userIDKey).(uuid.UUID)
+	return id, ok
 }

@@ -24,7 +24,7 @@ type Postgres interface {
 	LogoutUser(ctx context.Context, tokenHash string) error
 	GetMonitors(ctx context.Context) (dto.GetMonitorsOutput, error)
 	CreateMonitor(ctx context.Context, monitor domain.Monitor) error
-	DeleteMonitor(ctx context.Context, monitorID uuid.UUID) error
+	DeleteMonitor(ctx context.Context, monitorID uuid.UUID, userID uuid.UUID) error
 	UpdateMonitor(ctx context.Context, mtr domain.Monitor) error
 	GetMonitor(ctx context.Context, monitorID uuid.UUID) (domain.Monitor, error)
 	CreateCheck(ctx context.Context, check domain.Check) error

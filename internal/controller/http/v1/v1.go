@@ -1,11 +1,16 @@
 package v1
 
-import "github.com/RabotaemActivno/pulse/internal/usecase"
+import (
+	"log/slog"
+
+	"github.com/RabotaemActivno/pulse/internal/usecase"
+)
 
 type Handlers struct {
 	usecase *usecase.UseCase
+	logger  *slog.Logger
 }
 
-func New(uc *usecase.UseCase) *Handlers {
-	return &Handlers{usecase: uc}
+func New(uc *usecase.UseCase, logger *slog.Logger) *Handlers {
+	return &Handlers{usecase: uc, logger: logger}
 }
